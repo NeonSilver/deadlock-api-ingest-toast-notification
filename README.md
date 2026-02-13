@@ -36,6 +36,17 @@ If new matches were uploaded (and not already seen), you should get a Windows to
 - Toast body: `Uploaded N new matches.`
 - Toast icon: custom `toast-icon.png` from the add-on folder
 
+## How It Works
+
+1. Windows Scheduled Task runs this add-on wrapper (`ingest-notify.ps1`).
+2. Wrapper launches upstream `deadlock-api-ingest.exe`.
+3. Upstream scans Steam cache and uploads new match data.
+4. Wrapper reads upstream ingest signals (stdout + `fetched-salts.jsonl`).
+5. Wrapper dedupes match IDs in `seen-match-ids.txt`.
+6. Wrapper waits for Deadlock to close, then sends a Windows toast.
+
+The add-on does not replace upstream ingest; it sits on top of it.
+
 ## Uninstall
 
 Remote uninstall:
@@ -96,9 +107,11 @@ No separate system-wide app package is installed by this add-on.
 
 This add-on does not add extra telemetry or new servers.
 It only:
-- reads local Steam cache files (same as upstream),
+- reads local upstream ingest output/state (`fetched-salts.jsonl` and stdout logs),
 - stores local dedupe state (`seen-match-ids.txt`),
 - shows Windows notifications.
+
+Upstream `deadlock-api-ingest` is the component that scans local Steam cache files.
 
 ## License
 
