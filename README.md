@@ -92,14 +92,6 @@ No separate system-wide app package is installed by this add-on.
 - `seen-match-ids.txt` - dedupe list (`<match_id><TAB><local timestamp>`)
 - `ingest.log` - wrapper log (auto-trimmed)
 
-### Optional ref override (testing only)
-
-```powershell
-$env:DEADLOCK_TOAST_REPO_REF = "main"   # or "v1.0.0"
-irm https://raw.githubusercontent.com/NeonSilver/deadlock-api-ingest-toast-notification/main/install-custom.ps1 | iex
-Remove-Item Env:DEADLOCK_TOAST_REPO_REF -ErrorAction SilentlyContinue
-```
-
 ## Privacy
 
 This add-on does not add extra telemetry or new servers.
